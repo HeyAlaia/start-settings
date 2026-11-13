@@ -27,7 +27,7 @@ function gac {
 }
 function server { npx serve -s . -l 8080 }
 function proxy { $env:HTTP_PROXY="http://127.0.0.1:7897"; $env:HTTPS_PROXY="http://127.0.0.1:7897"; $env:no_proxy="" }
-function Stop-PortProcess {
+function kill-port {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true, Position=0)]
@@ -70,4 +70,52 @@ function Stop-PortProcess {
         Write-Error "An error occurred: $($_.Exception.Message)"
     }
     Write-Host "--- End of Port Process Stopper ---" -ForegroundColor Cyan
+}
+
+# ============================================================
+# Get-MyDns : 查看当前 DNS 使用情况（加入 $PROFILE 后直接敲 dns 使用）
+# 适用：Windows 10/11 + PowerShell 5.1 及以上
+# ============================================================
+
+function dns {
+    <#
+    .SYNOPSIS
+        查看当前各网卡的 DNS 服务器配置，并测试 DNS 解析是否正常。
+    .EXAMPLE
+        dns              # 查看全部网卡的 DNS
+        dns baidu.com    # 查看并测试解析指定域名
+    #>
+    param(
+        [string]$TestDomain = "www.baidu.com"
+    )
+
+    Write-Host ""
+    Write-Host "=== 各网卡当前使用的 DNS 服务器 ===" -ForegroundColor Cyan
+    Get-DnsClientServerAddress |
+        Where-Object { $_.ServerAddresses.Count -gt 0 } |
+        Select-Object InterfaceAlias,
+                      AddressFamily,
+                      ServerAddresses |
+        Format-Table -AutoSize
+
+    Write-Host "=== 系统摘要（ipconfig /all 中 DNS 部分）===" -ForegroundColor Cyan
+    # 兼容中英文系统
+    ipconfig /all | Select-String -Pattern "DNS Servers|DNS 服务器"
+    Write-Host ""
+
+    if ($TestDomain) {
+        Write-Host "=== 解析测试: $TestDomain ===" -ForegroundColor Cyan
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+        try {
+            $result = Resolve-DnsName -Name $TestDomain -ErrorAction Stop |
+                      Select-Object -First 3 Name, Type, IPAddress
+            $sw.Stop()
+            $result | Format-Table -AutoSize
+            Write-Host ("解析耗时: {0} ms" -f $sw.ElapsedMilliseconds) -ForegroundColor Green
+        }
+        catch {
+            $sw.Stop()
+            Write-Host "解析失败: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
 }
