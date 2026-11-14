@@ -1,3 +1,36 @@
+# ============================================================
+#  PowerShell 7 个人配置文件 (Profile)
+#  路径: $PROFILE
+#        C:\Users\mrala\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+#  范围: 当前用户 + 当前宿主 (Windows 终端 / 独立 pwsh 窗口)
+#  编辑: code $PROFILE    或   notepad $PROFILE
+#  重载: . $PROFILE       (不重开窗口也能让改动生效)
+#  自检: 取消下面这行的注释，新开窗口看到提示即代表已加载
+# Write-Host 'PowerShell 7 profile 已加载' -ForegroundColor DarkGray
+#
+#  备注: 若希望 VS Code 等「所有宿主」都加载，把内容放到
+#        $PROFILE.CurrentUserAllHosts
+#        (C:\Users\mrala\Documents\PowerShell\profile.ps1)
+# ============================================================
+
+# 可选：更严格的错误检查（按需取消注释）
+# Set-StrictMode -Version Latest
+# $ErrorActionPreference = 'Stop'
+
+# ------------------------------------------------------------
+# 1. 别名 / 短命令
+#    注意：不要覆盖内置别名，例如 ls / cd / cat / pwd
+# ------------------------------------------------------------
+# Set-Alias -Name ll -Value Get-ChildItem
+
+# ------------------------------------------------------------
+# 2. 函数 / 快捷操作  ← 主要写在这里
+# ------------------------------------------------------------
+# function mkcd {
+#     param([Parameter(Mandatory)][string]$Path)
+#     New-Item -ItemType Directory -Force -Path $Path | Out-Null
+#     Set-Location -LiteralPath $Path
+# }
 function ll { Get-ChildItem -Force $args }
 function gac {
     [CmdletBinding()]    param (
@@ -71,12 +104,6 @@ function kill-port {
     }
     Write-Host "--- End of Port Process Stopper ---" -ForegroundColor Cyan
 }
-
-# ============================================================
-# Get-MyDns : 查看当前 DNS 使用情况（加入 $PROFILE 后直接敲 dns 使用）
-# 适用：Windows 10/11 + PowerShell 5.1 及以上
-# ============================================================
-
 function dns {
     <#
     .SYNOPSIS
@@ -119,3 +146,14 @@ function dns {
         }
     }
 }
+# ------------------------------------------------------------
+# 3. 环境变量 / PATH
+#    注意：嵌套启动 pwsh 时本文件会重复加载，追加 PATH 前先判重
+# ------------------------------------------------------------
+# $env:MY_VAR = 'value'
+
+# ------------------------------------------------------------
+# 4. 模块 / 补全 / 提示符
+# ------------------------------------------------------------
+# Import-Module PSReadLine
+# Set-PSReadLineOption -PredictionSource History
