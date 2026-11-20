@@ -4,3 +4,4 @@ This is my computer start need some software and setting:
 * ZeroOmega
 * mise
 * oh my posh
+* Node.js
