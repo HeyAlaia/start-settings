@@ -157,6 +157,4 @@ function dns {
 # ------------------------------------------------------------
 # Import-Module PSReadLine
 # Set-PSReadLineOption -PredictionSource History
-if (Get-Command mise -ErrorAction SilentlyContinue) {
-    (& mise activate pwsh) | Out-String | Invoke-Expression
-}
+(& mise activate pwsh) | Out-String | Invoke-Expression
