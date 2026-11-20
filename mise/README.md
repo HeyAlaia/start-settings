@@ -34,3 +34,16 @@ node = "18"
 
 # 官方网站
 https://mise.jdx.dev/shell-setup.html
+
+# 注意
+添加powershell配置: 
+
+```powershell
+if (-not (Test-Path $PROFILE)) {
+    New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+}
+$activation = '(&mise activate pwsh) | Out-String | Invoke-Expression'
+if (-not (Select-String -Path $PROFILE -SimpleMatch $activation -Quiet)) {
+    Add-Content $PROFILE $activation
+}
+```
