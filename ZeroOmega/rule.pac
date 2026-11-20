@@ -18,7 +18,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)ycombinator\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)duckduckgo\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)githubassets\.com$/.test(host)) return "+proxy";
-        if (/(?:^|\.)bing\.com$/.test(host)) return "DIRECT";
         if (/^hellogithub\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)githubusercontent\.com$/.test(host)) return "+proxy";
         return "DIRECT";
