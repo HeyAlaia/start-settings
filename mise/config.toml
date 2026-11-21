@@ -1,14 +1,89 @@
 # ============================================================
-# mise 全局配置 —— 本机所有项目共享的默认工具版本
-# 项目级覆盖请在各仓库放 mise.toml
+# mise 全局配置文件（system 级别）
+# 作用：本机所有项目共享默认环境变量、mise行为配置、下载地址替换规则
+# 优先级：项目目录mise.toml > 用户级config.toml > 本系统全局配置
+# 项目需要差异化配置时，在项目根目录新建 mise.toml 覆盖即可
+# 校验命令：mise doctor
+# 查看当前生效环境变量：mise env
 # ============================================================
+
 [env]
+# -------------------------- Go 环境变量（国内代理） --------------------------
+# Go module 代理，优先国内源，失败直连
+GOPROXY = "https://goproxy.cn,direct"
+# 校验数据库国内镜像
+GOSUMDB = "sum.golang.google.cn"
+# 提示：GOROOT、GOPATH 交由 mise 自动管理，无需手动配置
 
-[settings.self_update]
-auto = "1d"
+# -------------------------- Node / Npm / Pnpm / Yarn --------------------------
+# npm 默认镜像源
+NPM_CONFIG_REGISTRY = "https://registry.npmmirror.com"
+# pnpm 镜像源（和npm保持一致）
+PNPM_REGISTRY = "https://registry.npmmirror.com"
+# Yarn Classic(v1) 镜像源
+YARN_REGISTRY = "https://registry.npmmirror.com"
 
+# -------------------------- Python / Pip / uv --------------------------
+# pip 清华源
+PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple"
+# uv 包管理器镜像（uv会优先读取该变量）
+UV_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple"
+# 可选：自定义pip缓存目录，规避Windows长路径限制
+# PIP_CACHE_DIR = "C:\\dev\\cache\\pip"
+
+# -------------------------- Rust / Cargo 国内镜像 --------------------------
+# rustup 安装包下载镜像
+RUSTUP_DIST_SERVER = "https://mirrors.ustc.edu.cn/rust-static"
+# rustup 更新源地址
+RUSTUP_UPDATE_ROOT = "https://mirrors.ustc.edu.cn/rust-static/rustup"
+# crates.io 索引镜像
+CARGO_REGISTRY = "https://mirrors.ustc.edu.cn/crates.io-index"
+
+# -------------------------- Java / Maven --------------------------
+# 指定maven自定义settings.xml路径（镜像、私服推荐写在settings.xml，更稳定）
+# MAVEN_ARGS = "-s C:\\dev\\conf\\maven-settings.xml"
+
+# -------------------------- 网络代理（按需开启，不需要保持注释） --------------------------
+# GIT_PROXY_COMMAND = "socks5://127.0.0.1:7890"
+# HTTP_PROXY = "http://127.0.0.1:7890"
+# HTTPS_PROXY = "http://127.0.0.1:7890"
+# NO_PROXY = "localhost,127.0.0.1,.local,corp.local"
+
+# -------------------------- 通用开发基础环境 --------------------------
+# 时区：上海时区
+TZ = "Asia/Shanghai"
+# Python 标准输出编码固定utf-8，避免中文乱码
+PYTHONIOENCODING = "utf-8"
+# Node启动参数：关闭冗余警告
+NODE_OPTIONS = "--no-warnings"
+
+# ============================================================
+# [settings] 区块：控制 mise 本体自身行为
+# 注意：这不是环境变量！不要挪到 [env] 块
+# ============================================================
+[settings]
+# 自动安装：执行命令发现工具缺失时自动下载安装，开箱即用
+auto_install = true
+# 并行任务数：控制多工具同时下载/编译并发量，根据CPU核心调整
+jobs = 6
+# 安装失败保留临时目录，方便排查下载、编译异常
+always_keep_install = true
+# 缓存自动清理策略：30天未访问的工具缓存自动删除
+cache_prune_age = "30d"
+# HTTP 请求超时时间，解决国内网络慢导致下载超时
+http_timeout = "60s"
+
+# ============================================================
+# [settings.url_replacements] 地址替换规则
+# ============================================================
 [settings.url_replacements]
 "https://github.com/" = "https://v4.gh-proxy.org/https://github.com/"
+
+# ============================================================
+# mise本体自动更新：每1天检查一次新版本
+# ============================================================
+[settings.self_update]
+auto = "1d"
 
 [tools]
 java = "temurin-17"
