@@ -21,6 +21,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/^hellogithub\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)githubusercontent\.com$/.test(host)) return "+proxy";
         if (/(?:^|\.)google\.com$/.test(host)) return "+proxy";
+        if (/(?:^|\.)linux\.do$/.test(host)) return "+proxy";
         return "DIRECT";
     },
     "+proxy": function(url, host, scheme) {
