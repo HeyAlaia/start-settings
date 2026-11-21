@@ -2,6 +2,10 @@
 # mise 全局配置 —— 本机所有项目共享的默认工具版本
 # 项目级覆盖请在各仓库放 mise.toml
 # ============================================================
+[env]
+
+[settings.self_update]
+auto = "1d"
 
 [settings.url_replacements]
 "https://github.com/" = "https://v4.gh-proxy.org/https://github.com/"
