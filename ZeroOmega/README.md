@@ -1,4 +1,4 @@
 # pac链接
 ~~~
-https://release-assets.githubusercontent.com/github-production-release-asset/1466197613/2d3cc50c-45f3-4f12-a250-b8c0e200deb6?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-23T02%3A46%3A40Z&rscd=attachment%3B+filename%3Dgfw.pac&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-23T01%3A45%3A43Z&ske=2026-11-23T02%3A46%3A40Z&sks=b&skv=2018-11-09&sig=ZjliXT1HvJSYpnYcKx80ZPMNKgnoow9SIA%2Fb5iGTt4c%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5NTQwMDMxNCwibmJmIjoxNzk1NDAwMDE0LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.UkUHpI8OQi_YzXVCJOLlcEs0Fb6BLDbXIcNE9ariTE4&response-content-disposition=attachment%3B%20filename%3Dgfw.pac&response-content-type=application%2Foctet-stream
+https://raw.githubusercontent.com/HeyAlaia/custom-pac/refs/heads/master/gfw.pac
 ~~~
